@@ -7,19 +7,26 @@ let baseUrl = 'http://www.ts.kg';
 let listOfSeriesLinks = [];
 let resultSeriesLinks = [];
 let fileName = 'links.txt';
+let fileNameAfterDownloadLinks = 'fileName.txt';
 
 request(url, (err, res, html) => {  
 	const $ = cheerio.load(html);
 
-	let a = $('.pagination').children('li');
-	Object.keys(a).forEach(item => {
-		if (!isNaN(item))
-			listOfSeriesLinks.push(a[item].children[0].attribs.href);		
+	$('.pagination').find('a').each((i, element) => {
+
+		let linkObject = {
+			number: null,
+			link: ''
+		};
+
+		linkObject.number = $(element).text();
+		linkObject.link = element.attribs.href;
+		listOfSeriesLinks.push(linkObject);
 	});
 
 	for (let i = 0; i < listOfSeriesLinks.length; i++) {
 		// one link
-		request(baseUrl + listOfSeriesLinks[i], (err, res, html) => {
+		request(baseUrl + listOfSeriesLinks[i].link, (err, res, html) => {
 			const $ = cheerio.load(html);
 			let downloadBtn = $('#download-button')[0].attribs.href;
 
@@ -29,6 +36,13 @@ request(url, (err, res, html) => {
 				resultSeriesLinks.push(baseUrl + urlOneSeries);
 
 				fs.appendFile(fileName, baseUrl + urlOneSeries + '\n', 'utf-8', (err) => {
+					if (err) console.log(err)
+				});
+
+				let arrayOfLink = urlOneSeries.split('/');
+				let hashFileName = arrayOfLink[arrayOfLink.length - 1];
+
+				fs.appendFile(fileNameAfterDownloadLinks, listOfSeriesLinks[i].number +'|'+ hashFileName + '\n', 'utf-8', (err) => {
 					if (err) console.log(err)
 				});
 			});	
