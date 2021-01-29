@@ -2,12 +2,12 @@ const request = require('request');
 const cheerio = require('cheerio');
 let fs = require('fs');
 
-let url = 'http://www.ts.kg/show/healer';
+let url = process.argv[2]; // url for collect links for download them further
 let baseUrl = 'http://www.ts.kg';
 let listOfSeriesLinks = [];
 let resultSeriesLinks = [];
-let fileName = 'links.txt';
-let fileNameAfterDownloadLinks = 'fileName.txt';
+let fileName = process.argv[3]; // file name for links. links save into the file
+let fileNameAfterDownloadLinks = process.argv[4];
 
 request(url, (err, res, html) => {  
 	const $ = cheerio.load(html);
