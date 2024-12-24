@@ -14,9 +14,10 @@ fs.readFile(fileName, 'utf8', (err, data) => {
     	let newFName = fName.split('|')[0].trim();
     	let oldName = fName.split('|')[1].trim();
 
-	    fs.rename('./' + oldName,'./' + newFName, function(err) {
+		// here newFileName can't be .mp4 need to check and fix
+	    fs.rename('./' + oldName,'./' + `${newFName}.mp4`, function(err) {
 		    if ( err ) console.log('ERROR: ' + err);
-		});	
+		});
     }
 
 
