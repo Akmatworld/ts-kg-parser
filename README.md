@@ -2,13 +2,12 @@
 The parser help you collect all links of serials in the ts.kg for further download them.
 
 ```
-cd ts
+cd ts-kg-parser
 
-./download.sh url folder name
-
-Folder will be created.
+./download.sh [url] [folder name]
 
 Example: ./download.sh https://www.ts.kg/show/healer Healer
 
-Serials will save in the Видео folder
+Healer folder will be created.
+
 ```

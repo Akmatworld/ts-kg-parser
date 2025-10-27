@@ -9,11 +9,6 @@ fileForLinks=links.txt
 fileNameAfterDownload=fileName.txt
 #Save current directory path
 currentDir=$(pwd)
-#Get home directory
-homeDir=$USER
-
-#Change directory to user videos
-cd "/home/$homeDir/Видео"
 
 #Create folder
 mkdir $folderName
@@ -28,10 +23,12 @@ touch $fileForLinks $fileNameAfterDownload
 node "$currentDir/index.js" $url $fileForLinks $fileNameAfterDownload
 
 #Run wget
-wget -ci $fileForLinks 
+wget -ci $fileForLinks
 
 #We need change name of every downloaded video files
-node "$currentDir/changeFileName.js" $fileNameAfterDownload 
+node "$currentDir/changeFileName.js" $fileNameAfterDownload
+
+node "$currentDir/move.js" $fileNameAfterDownload
 
 #We need remove some files after those actions
 rm -rf $fileForLinks $fileNameAfterDownload
