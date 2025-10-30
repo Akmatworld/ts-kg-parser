@@ -25,13 +25,16 @@ node "$currentDir/index.js" $url $fileForLinks $fileNameAfterDownload
 #Run wget
 wget -ci $fileForLinks
 
+#We need remove some files after those actions
+rm -rf $fileForLinks
+
 #We need change name of every downloaded video files
 node "$currentDir/changeFileName.js" $fileNameAfterDownload
 
 node "$currentDir/move.js" $fileNameAfterDownload
 
 #We need remove some files after those actions
-rm -rf $fileForLinks $fileNameAfterDownload
+rm -rf $fileNameAfterDownload
 
 #Comment after success downloaded
-echo 'Files succesed downloaded, Enjoy watching dude :)'
+echo 'Files are successfully downloaded, Enjoy dude :)'

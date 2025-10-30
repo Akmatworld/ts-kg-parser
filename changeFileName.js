@@ -12,8 +12,10 @@ fs.readFile(fileName, 'utf8', (err, data) => {
     for (let i = 0; i < arrayOfFileName.length; i++) {
     	let fName = arrayOfFileName[i];
 		let nameArray = fName.split('|')
-    	let newFName = nameArray[0] + '|' + nameArray.at(-1);
-    	let oldName = nameArray('|')[1]
+    	// let newFName = `Season-${nameArray.at(-1)}-episode-${nameArray[0]}`;
+		let newFName = `Episode-${nameArray[0]}s${nameArray.at(-1)}`;
+		let oldName = nameArray[1]
+
 
 		// here newFileName can't be .mp4 need to check and fix
 	    fs.rename('./' + oldName,'./' + `${newFName}.mp4`, function(err) {

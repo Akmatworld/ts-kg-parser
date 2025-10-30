@@ -14,18 +14,15 @@ async function organizeVideosBySeason() {
             const stat = await fs.promises.stat(filePath);
             if (!stat.isFile()) continue;
 
-            // Ищем число после символа "|"
-            const match = file.match(/\|(\d+)/);
-            if (!match) {
-                console.log(`⏭ Пропущен: ${file} (не содержит "|число")`);
-                continue;
+            const ext = path.extname(filePath); // получаем расширение, например ".txt"
+            if (ext.includes('txt')) {
+                continue
             }
 
-            const seasonNumber = match[1];
-            const seasonDir = path.join(sourceDir, `Сезон_${seasonNumber}`);
+            // Ищем число
+            const seasonNumber = file.split('s').at(-1).split('.')[0]
 
-            // Создаём папку для сезона, если её нет
-            await fs.promises.mkdir(seasonDir, { recursive: true });
+            const seasonDir = path.join(sourceDir, `Сезон_${seasonNumber}`);
 
             // Новый путь для файла
             const newFilePath = path.join(seasonDir, file);
